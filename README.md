@@ -1,7 +1,13 @@
-bugzilla-node
-=============
+# bugzilla-node
+
 
 A prototype REST API on top of the Bugzilla database.
+
+## Running
+
+Should be as simple as `npm install` and then `node server.js`. The server will be accessible at http://0.0.0.0:8888.
+
+## Database setup
 
 A public dump of the Bugzilla database is available here: http://people.mozilla.com/~mhoye/bugzilla/
 
