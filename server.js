@@ -13,7 +13,7 @@ var connection = mysql.createConnection({
 
 connection.connect();
 
-server.get('/bug/:bugId', function(req, res) {
+server.get('/bug/:bugId?', function(req, res) {
   var bugId = req.params.bugId;
   if (bugId) {
     var sql = 'SELECT bug_id id, alias, bug_status status, short_desc summary, p.name product, ' +
