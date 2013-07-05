@@ -14,16 +14,36 @@ var connection = mysql.createConnection({
 
 connection.connect();
 
-server.get('/bug', function(req, res) {
+server.get('/bugs', function(req, res) {
   connection.
     query(sql.bugs.findAll).
     stream().pipe(JSONStream.stringify()).pipe(res);
 });
 
-server.get('/bug/:bugId', function(req, res) {
+server.get('/bugs/:bugId', function(req, res) {
   var bugId = req.params.bugId;
 
   connection.query(sql.bugs.find, [bugId], function(error, result) {
+    var row = result[0];
+    if (!row) { return res.send(404); }
+
+    return res.json(row);
+  });
+});
+
+server.get('/bugs/:bugId/comments', function(req, res) {
+  var bugId = req.params.bugId;
+
+  connection.
+    query(sql.comments.findAll, [bugId]).
+    stream().pipe(JSONStream.stringify()).pipe(res);
+});
+
+server.get('/bugs/:bugId/comments/:commentId', function(req, res) {
+  var bugId = req.params.bugId,
+      commentId = req.params.commentId;
+
+  connection.query(sql.comments.find, [bugId, commentId], function(error, result) {
     var row = result[0];
     if (!row) { return res.send(404); }
 

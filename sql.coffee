@@ -20,3 +20,20 @@ module.exports =
       LEFT JOIN components c ON b.component_id = c.id
       ORDER BY bug_id DESC LIMIT 10000
       """
+  comments:
+    find:
+      """
+      SELECT comment_id id, bug_id, thetext text, p.realname creator, bug_when created_at, isprivate is_private
+      FROM longdescs ld
+      LEFT JOIN profiles p ON ld.who = p.userid
+      WHERE bug_id = ? AND comment_id = ?
+      """
+
+    findAll:
+      """
+      SELECT comment_id id, bug_id, thetext text, p.realname creator, bug_when created_at, isprivate is_private
+      FROM longdescs ld
+      LEFT JOIN profiles p ON ld.who = p.userid
+      WHERE bug_id = ?
+      ORDER BY comment_id
+      """
