@@ -1,7 +1,6 @@
 # bugzilla-node
 
-
-A prototype REST API on top of the Bugzilla database.
+A prototype REST API on top of the Bugzilla database. Built for use with [bugzilla-ember](https://github.com/ebryn/bugzilla-ember).
 
 ## Running
 
