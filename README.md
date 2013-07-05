@@ -27,3 +27,5 @@ innodb_log_buffer_size = 64M
 innodb_flush_log_at_trx_commit = 1
 innodb_lock_wait_timeout = 180
 ```
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ebryn/bugzilla-node/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
