@@ -1,53 +1,36 @@
 var express = require('express'),
     mysql = require("mysql"),
     JSONStream = require('JSONStream'),
-    sql = require('./sql');
+    db = require('./db');
 
 var server = express();
 
-var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password :  process.env.BUGZILLA_PASSWORD || '',
-  database : 'bugzilla_public_20130102'
-});
-
-connection.connect();
-
 server.get('/bugs', function(req, res) {
-  connection.
-    query(sql.bugs.findAll).
-    stream().pipe(JSONStream.stringify()).pipe(res);
+  db.bugs.find().then(function(bugs) {
+    bugs.stream().pipe(JSONStream.stringify()).pipe(res);
+  })
 });
 
 server.get('/bugs/:bugId', function(req, res) {
-  var bugId = req.params.bugId;
-
-  connection.query(sql.bugs.find, [bugId], function(error, result) {
-    var row = result[0];
-    if (!row) { return res.send(404); }
-
-    return res.json(row);
+  db.bugs.find(req.params.bugId).then(function(bug) {
+    if (!bug) { return res.send(404); }
+    return res.json(bug);
   });
 });
 
 server.get('/bugs/:bugId/comments', function(req, res) {
-  var bugId = req.params.bugId;
-
-  connection.
-    query(sql.comments.findAll, [bugId]).
-    stream().pipe(JSONStream.stringify()).pipe(res);
+  db.comments.find(req.params.bugId).then(function(comments) {
+    comments.stream().pipe(JSONStream.stringify()).pipe(res);
+  })
 });
 
 server.get('/bugs/:bugId/comments/:commentId', function(req, res) {
   var bugId = req.params.bugId,
       commentId = req.params.commentId;
 
-  connection.query(sql.comments.find, [bugId, commentId], function(error, result) {
-    var row = result[0];
-    if (!row) { return res.send(404); }
-
-    return res.json(row);
+  db.comments.find(bugId, commentId).then(function(comment) {
+    if (!comment) { return res.send(404); }
+    return res.json(comment);
   });
 });
 

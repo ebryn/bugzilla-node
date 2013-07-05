@@ -7,7 +7,8 @@
     "JSONStream": "~0.6.4",
     "mysql": "~2.0.0-alpha8",
     "request": "~2.21.0",
-    "express": "~3.3.3"
+    "express": "~3.3.3",
+    "rsvp": "~2.0.0"
   },
   "devDependencies": {},
   "scripts": {
