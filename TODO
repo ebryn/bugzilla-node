@@ -1,0 +1,4 @@
+- integrate socket.io
+  - notify clients when saves occur via our API
+  - poll server-side for changes to "watched" records
+

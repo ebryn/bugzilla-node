@@ -8,7 +8,8 @@
     "mysql": "~2.0.0-alpha8",
     "request": "~2.21.0",
     "express": "~3.3.3",
-    "rsvp": "~2.0.0"
+    "rsvp": "~2.0.0",
+    "socket.io": "~0.9.16"
   },
   "devDependencies": {},
   "scripts": {

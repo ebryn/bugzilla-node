@@ -1,37 +1,20 @@
 var express = require('express'),
-    JSONStream = require('JSONStream'),
-    db = require('./db');
+    config = require('./config'),
+    bugs = require('./controllers/bugs');
 
-var server = express();
+var app = express(),
+    server = require('http').createServer(app)
+    io = require('socket.io').listen(server);
 
-server.get('/bugs', function(req, res) {
-  db.bugs.find().then(function(bugs) {
-    bugs.stream().pipe(JSONStream.stringify()).pipe(res);
-  })
-});
+app.use(express.static(__dirname + '/public'));
+app.use(express.bodyParser());
 
-server.get('/bugs/:bugId', function(req, res) {
-  db.bugs.find(req.params.bugId).then(function(bug) {
-    if (!bug) { return res.send(404); }
-    return res.json(bug);
-  });
-});
+app.get('/bugs', bugs.getBugs);
+app.get('/bugs/:bugId', bugs.getBug);
+app.post('/bugs', bugs.createBug);
+app.get('/bugs/:bugId/comments', bugs.getCommentsForBug);
+app.get('/bugs/:bugId/comments/:commentId', bugs.getCommentForBug);
+app.post('/bugs/:bugId/comments', bugs.createCommentForBug);
 
-server.get('/bugs/:bugId/comments', function(req, res) {
-  db.comments.find(req.params.bugId).then(function(comments) {
-    comments.stream().pipe(JSONStream.stringify()).pipe(res);
-  })
-});
-
-server.get('/bugs/:bugId/comments/:commentId', function(req, res) {
-  var bugId = req.params.bugId,
-      commentId = req.params.commentId;
-
-  db.comments.find(bugId, commentId).then(function(comment) {
-    if (!comment) { return res.send(404); }
-    return res.json(comment);
-  });
-});
-
-server.listen(8888);
-console.log('started yo');
+server.listen(config.PORT);
+console.log('started server on port ' + config.PORT);

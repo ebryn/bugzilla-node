@@ -1,16 +1,17 @@
 var RSVP = require('rsvp'),
     mysql = require("mysql"),
     sql = require('./sql'),
+    config = require('../config'),
     connection;
 
 function connect() {
   if (connection) { return connection; }
 
   connection = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password :  process.env.BUGZILLA_PASSWORD || '',
-    database : 'bugzilla_public_20130102'
+    host     : config.BZ_DB_HOST,
+    user     : config.BZ_DB_USER,
+    password : config.BZ_DB_PASSWORD,
+    database : config.BZ_DB_NAME
   });
 
   connection.connect();
