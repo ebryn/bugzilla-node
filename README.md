@@ -34,3 +34,4 @@ innodb_lock_wait_timeout = 180
 ```
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ebryn/bugzilla-node/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+![](https://d3oi6fmp1dfbdb.cloudfront.net/g.gif?repo=ebryn/bugzilla-node)
