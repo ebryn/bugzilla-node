@@ -1,5 +1,4 @@
 var express = require('express'),
-    mysql = require("mysql"),
     JSONStream = require('JSONStream'),
     db = require('./db');
 
