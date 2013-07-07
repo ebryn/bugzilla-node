@@ -5,5 +5,6 @@ module.exports = {
   BZ_DB_PASSWORD: process.env.BZ_DB_PASSWORD || '',
   BZ_DB_NAME: process.env.BZ_DB_NAME || 'bugzilla_public_20130102',
   BZ_REST_ENDPOINT: process.env.BZ_REST_ENDPOINT || 'http://bugzilla-api.erikbryn.com/bzapi_staging/',
+  BZ_INDEX_CGI: process.env.BZ_INDEX_CGI || 'http://bugzilla-api.erikbryn.com/staging/index.cgi',
   PORT: process.env.PORT || 8888
 };

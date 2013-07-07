@@ -1,6 +1,7 @@
 var express = require('express'),
     config = require('./config'),
-    bugs = require('./controllers/bugs');
+    bugs = require('./controllers/bugs'),
+    auth = require('./controllers/auth');
 
 var app = express(),
     server = require('http').createServer(app)
@@ -15,6 +16,8 @@ app.post('/bugs', bugs.createBug);
 app.get('/bugs/:bugId/comments', bugs.getCommentsForBug);
 app.get('/bugs/:bugId/comments/:commentId', bugs.getCommentForBug);
 app.post('/bugs/:bugId/comments', bugs.createCommentForBug);
+
+app.post('/login', auth.login);
 
 server.listen(config.PORT);
 console.log('started server on port ' + config.PORT);
