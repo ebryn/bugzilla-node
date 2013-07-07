@@ -71,7 +71,7 @@ exports.auth = {
   findUserIdForToken: function(token) {
     return new RSVP.Promise(function(resolve, reject) {
       var connection = connect();
-      connection.query("SELECT userid user_id FROM tokens WHERE token = ? LIMIT 1", [token], function(error, result) {
+      connection.query("SELECT userid user_id FROM logincookies WHERE cookie = ?", [token], function(error, result) {
         if (error) { return reject(error); }
         resolve(result[0] && result[0].user_id);
       });
