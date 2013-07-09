@@ -7,7 +7,7 @@ module.exports = {
     findBlockingBugIds: "SELECT blocked id\nFROM dependencies\nWHERE dependson = ?\nORDER BY blocked"
   },
   comments: {
-    find: "SELECT comment_id id, bug_id, thetext text, p.realname creator, bug_when created_at, isprivate is_private\nFROM longdescs ld\nLEFT JOIN profiles p ON ld.who = p.userid\nWHERE bug_id = ? AND comment_id = ?",
+    find: "SELECT comment_id id, bug_id, thetext text, p.realname creator, bug_when created_at, isprivate is_private\nFROM longdescs ld\nLEFT JOIN profiles p ON ld.who = p.userid\nWHERE comment_id = ?",
     findAll: "SELECT comment_id id, bug_id, thetext text, p.realname creator, bug_when created_at, isprivate is_private\nFROM longdescs ld\nLEFT JOIN profiles p ON ld.who = p.userid\nWHERE bug_id = ?\nORDER BY comment_id",
     findIds: "SELECT comment_id id\nFROM longdescs ld\nWHERE bug_id = ?\nORDER BY comment_id"
   },

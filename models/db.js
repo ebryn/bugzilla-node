@@ -60,7 +60,18 @@ exports.bugs = {
 };
 
 exports.comments = {
-  find: function(bugId, id) {
+  findById: function(id) {
+    return new RSVP.Promise(function(resolve, reject){
+      var connection = connect();
+      connection.query(sql.comments.find, [id], function(error, result) {
+        if (error) { return reject(error); }
+        resolve(result[0]);
+      });
+    });
+  },
+
+  /*
+  find: function(id) {
     return id ? this.findById(bugId, id) : this.findAll(bugId);
   },
 
@@ -81,6 +92,7 @@ exports.comments = {
       resolve(connection.query(sql.comments.findAll, [bugId]));
     });
   },
+  */
 
   findIdsForBug: function(bugId) {
     return new RSVP.Promise(function(resolve, reject) {

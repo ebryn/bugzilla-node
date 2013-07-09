@@ -73,6 +73,8 @@ module.exports = {
     });
   },
 
+  /*
+  
   getCommentsForBug: function(req, res) {
     db.comments.find(req.params.bugId).then(function(comments) {
       comments.stream().pipe(JSONStream.stringify()).pipe(res);
@@ -88,6 +90,8 @@ module.exports = {
       return res.json(comment);
     });
   },
+
+  */
 
   createCommentForBug: function(req, res) {
     var bugId = req.params.bugId,

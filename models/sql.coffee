@@ -41,7 +41,7 @@ module.exports =
       SELECT comment_id id, bug_id, thetext text, p.realname creator, bug_when created_at, isprivate is_private
       FROM longdescs ld
       LEFT JOIN profiles p ON ld.who = p.userid
-      WHERE bug_id = ? AND comment_id = ?
+      WHERE comment_id = ?
       """
 
     findAll:
