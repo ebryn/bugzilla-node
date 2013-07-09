@@ -1,4 +1,5 @@
-var db = require('../models/db'),
+var RSVP = require('rsvp'),
+    db = require('../models/db'),
     request = require('request'),
     JSONStream = require('JSONStream'),
     config = require('../config');
@@ -11,8 +12,27 @@ module.exports = {
   },
 
   getBug: function(req, res) {
-    db.bugs.find(req.params.bugId).then(function(bug) {
+    var bugId = req.params.bugId,
+        bug = db.bugs.find(bugId),
+        attachments = db.attachments.findIdsForBug(bugId),
+        comments = db.comments.findIdsForBug(bugId),
+        dependentBugs = db.bugs.findDependentBugIds(bugId),
+        blockingBugs = db.bugs.findBlockingBugIds(bugId),
+        all = RSVP.all([bug, attachments, comments, dependentBugs, blockingBugs]);
+
+    all.then(function(results) {
+      var bug = results[0],
+          attachments = results[1],
+          comments = results[2],
+          dependentBugs = results[3],
+          blockingBugs = results[4];
+
       if (!bug) { return res.send(404); }
+
+      bug.comments = comments;
+      bug.attachments = attachments;
+      bug.depends_on = dependentBugs;
+      bug.blocks = blockingBugs;
       return res.json(bug);
     });
   },

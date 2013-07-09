@@ -4,8 +4,8 @@ var express = require('express'),
     auth = require('./controllers/auth');
 
 var app = express(),
-    server = require('http').createServer(app)
-    io = require('socket.io').listen(server);
+    server = require('http').createServer(app);
+    // io = require('socket.io').listen(server);
 
 app.use(express.static(__dirname + '/public'));
 app.use(express.bodyParser());

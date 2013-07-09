@@ -20,6 +20,21 @@ module.exports =
       LEFT JOIN components c ON b.component_id = c.id
       ORDER BY bug_id DESC LIMIT 10000
       """
+    findDependentBugIds:
+      """
+      SELECT dependson id
+      FROM dependencies
+      WHERE blocked = ?
+      ORDER BY dependson
+      """
+    findBlockingBugIds:
+      """
+      SELECT blocked id
+      FROM dependencies
+      WHERE dependson = ?
+      ORDER BY blocked
+      """
+
   comments:
     find:
       """
@@ -36,4 +51,21 @@ module.exports =
       LEFT JOIN profiles p ON ld.who = p.userid
       WHERE bug_id = ?
       ORDER BY comment_id
+      """
+
+    findIds:
+      """
+      SELECT comment_id id
+      FROM longdescs ld
+      WHERE bug_id = ?
+      ORDER BY comment_id
+      """
+
+  attachments:
+    findIds:
+      """
+      SELECT attach_id id
+      FROM attachments a
+      WHERE bug_id = ? AND isobsolete = 0
+      ORDER BY attach_id
       """

@@ -40,7 +40,23 @@ exports.bugs = {
       // TODO: better way to do this?
       resolve(connection.query(sql.bugs.findAll));
     });
-  }
+  },
+
+  findDependentBugIds: function(bugId) {
+    return new RSVP.Promise(function(resolve, reject) {
+      connection.query(sql.bugs.findDependentBugIds, [bugId], function(err, results) {
+        resolve(results.map(function(result) { return result.id; }));
+      });
+    });
+  },
+
+  findBlockingBugIds: function(bugId) {
+    return new RSVP.Promise(function(resolve, reject) {
+      connection.query(sql.bugs.findBlockingBugIds, [bugId], function(err, results) {
+        resolve(results.map(function(result) { return result.id; }));
+      });
+    });
+  }  
 };
 
 exports.comments = {
@@ -63,6 +79,24 @@ exports.comments = {
       var connection = connect();
       // TODO: better way to do this?
       resolve(connection.query(sql.comments.findAll, [bugId]));
+    });
+  },
+
+  findIdsForBug: function(bugId) {
+    return new RSVP.Promise(function(resolve, reject) {
+      connection.query(sql.comments.findIds, [bugId], function(err, results) {
+        resolve(results.map(function(result) { return result.id; }));
+      });
+    });
+  }
+};
+
+exports.attachments = {
+  findIdsForBug: function(bugId) {
+    return new RSVP.Promise(function(resolve, reject) {
+      connection.query(sql.attachments.findIds, [bugId], function(err, results) {
+        resolve(results.map(function(result) { return result.id; }));
+      });
     });
   }
 };
