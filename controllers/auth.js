@@ -18,8 +18,7 @@ module.exports = {
       var token = response.headers['set-cookie'][1].match(/Bugzilla_logincookie=([^;]*)/)[1]; // yuck
 
       db.auth.findUserIdForToken(token).then(function(userId) {
-        debugger;
-        res.json({token: token, user_id: userId});
+        res.json({token: token, user_id: userId}); // TODO: include user information in response too
       });
     });
   }
